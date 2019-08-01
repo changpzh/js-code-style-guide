@@ -4,7 +4,7 @@ Aug 1, 2019
 
 * [In: Introduction](#S-introduction)
 * [O: Old Style Guide](#S-oldGuide)
-* [CP: Common code problems in SBTS](#S-CommonCodeProblems)
+* [CP: Common code problems](#S-CommonCodeProblems)
 
 # <a name="S-introduction"></a>In: Introduction
 
@@ -18,8 +18,6 @@ Introduction summary:
 * [In.sec: Major sections](#SS-sec)
 
 # <a name="S-oldGuide"></a>O: Old Style Guide
-
-[Old Style Guide](https://confluence.int.net.nokia.com/display/SbtsRdWow/JavaScript+Style+Guide):
 
 * [O.list: List of Rules](#SS-ruleList_Old)
 * [O.packageJson: "package.json" Rules](#SS-packageJson_Old)
@@ -1143,14 +1141,14 @@ Use this construction for JS Code:
 [goodExample]: images/check.png
 [badExample]: images/error.png
 
-# <a name="S-CommonCodeProblems"></a>CP: Common code problems in SBTS
+# <a name="S-CommonCodeProblems"></a>CP: Common code problems
 
-Common code problems in SBTS:
+Common code problems
 
-Take a deeper look on the page taking into the consideration common code problems in SBTS (described below).
+Take a deeper look on the page taking into the consideration common code problems (described below).
 This will help you to avoid misleading results of some functions and test utils usage.
 
-The problems described here have been found in numerous places, primarily in test code, but some of them are also relevant to production code. Please take the time to read this carefully; hopefully we can greatly improve the quality and robustness of NodeOAM and SiteOAM tests by understanding and fixing these problems.
+The problems described here have been found in numerous places, primarily in test code, but some of them are also relevant to production code. Please take the time to read this carefully; hopefully we can greatly improve the quality and robustness code tests by understanding and fixing these problems.
 
 After working with nodeoam tests - trying to make them run with `grunt test` so we could always execute all of them, and not waste lots of time as it's right now with runner - I've been able to identify some common problems with code you are write in tests, as well as some that can also be found in actual production code.
 
