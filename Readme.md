@@ -1,6 +1,6 @@
 # <a name="main"></a>JavaScript Guidelines
 
-February 1, 2016
+Aug 1, 2019
 
 * [In: Introduction](#S-introduction)
 * [O: Old Style Guide](#S-oldGuide)
@@ -1155,9 +1155,7 @@ The problems described here have been found in numerous places, primarily in tes
 After working with nodeoam tests - trying to make them run with `grunt test` so we could always execute all of them, and not waste lots of time as it's right now with runner - I've been able to identify some common problems with code you are write in tests, as well as some that can also be found in actual production code.
 
 * [CP.promises: Promises](#SS-CP.promises)
-* [CP.inquisitor: Inquisitor](#SS-CP.inquisitor)
 * [CP.timeintests: Time in tests](#SS-CP.timeintests)
-* [CP.bimtesttrame: bimTestFrame](#SS-CP.bimtesttrame)
 * [CP.pac: Promises and continuations](#SS-CP.pac)
 
 ## <a name="SS-CP.promises"></a> Promises
@@ -1213,32 +1211,6 @@ Unfortunately, sometimes even `.catch()` at the promise chain can be useless, es
     }).then(test.done).catch(test.done);
     ```
 
-## <a name="SS-CP.inquisitor"></a> Inquisitor
-
-![warning][warning] Below problems are no longer present in mocha tests with new inquisitor. See more: http://esmz01.emea.nsn-net.net/megazone/inquisitor
-
-In case you don't know yet - Inquisitor is our library used for mocking in JS. It works pretty well when used correctly, although it still needs some improvements (some of these are coming your way soon, together with some additional features not yet available today). Please remember to **always** call `restore` and `verify` on Inquisitor objects - otherwise the only verification (at the moment) will be the verification whether there were any excess calls or not. Also to proof the code for any future changes in Inquisitor, please always call `restore` on all the inquisitors first, and only then `verify` on all of them.
-
-![remark][remark] The preferred pattern for doing that in promise chains is as follows (this is closely related to the previous section):
-
-```javascript
-.then(function() {
-    // do the following for every inquisitor:
-    inq.restore();
-    // and then also do this for every inquisitor:
-    inq.verify();
-
-    test.done();
-})
-.catch(function(error) {
-    test.done(error);
-});
-```
-
-To allow Inquisitor to properly report problems to Nodeunit, remember to always pass `test` as an argument of `Inquisitor.expect`. Also remember to do that in case of `mockedMescom`: as the third argument to `expectWithReply`, the second to `expect`, and as an argument to `expectCall`.
-
-Be cautious about the errors thrown out in `.tearDown()` test function, as they tend to cover any errors appearing before its call and passed to `test.done(error)`.
-
 ## <a name="SS-CP.timeintests"></a> Time in tests
 
 Please be aware that in both SiteOAM and NodeOAM a library for "mocking" the timers exists - it resides in `testutils/chronos.js`. Please do not use real time in tests.
@@ -1250,28 +1222,6 @@ It is important to realize that handling of mocked timeouts works differently in
 ```javascript
 404 - example not found // TODO
 ```
-
-## <a name="SS-CP.bimtesttrame"></a> bimTestFrame
-
-bimTestFrame - more precisely `bimSuiteSetUp` and `bimSuiteTearDown` - should not be used if the tests are to be maintainable and executable in a reasonable time.
-
-The problem with bimTestFrame (that is, with the suites and test-wrapping functions that are present there - some of the helper functions from that file certainly make sense) is that it starts up all the domains, together with some web servers (...including, for example, swUploadEndpoint in all tests in NodeOAM that use bimTestFrame!). So, instead of properly testing the unit you are working on in isolation, such tests execute at a higher level with the entire OAM running.
-
-Tests that do use bimTestFrame can probably be qualified into one of three categories:
-
-1. Tests that just want to easily wrap rejected promises and initial BIM loading.
-2. Tests that test just a given domain, and might talk with other domains.
-3. Tests that test multiple domains at the same time (for example, a test for a cross-domain feature).
-
-For tests covered by (1), please consider moving to (or writing new ones in) a lightweight bluebird wrapper that does exactly that - testPromiseMinimal residing in `testutils/promiseTestFrameMinimal.js`.
-
-For tests covered by (2), there's no need to start everything. If the domain doesn't need to talk with other domains - then just write a test (possibly starting your domain first), maybe with the use of testPromiseMinimal. If it does need to talk to outsiders, please consider stubbing and mocking other domains' controllers and registrars.
-
-For tests that fall into the last category (3), it's similar to (2) - just start multiple domains manually, instead of a single one.
-
-We are aware that mocking the interactions through BIM are difficult at this time (which pretty much follows from the architecture, but that's not the topic for this email). Soon, Inquisitor will be improved to allow unexpected calls to be ignored, which should improve the situation (so, you could mock the function used to update BIM to check whether the code is making all the writes it's supposed to do - in case of external "interfaces" - and just ignore the internal writes used to communicate within a domain, since stating all the expectations in this case might be tiresome, and they can get out of sync with production code quickly).
-
-Also Inquisitor will soon gain the ability to create sequences of expectations across multiple inquisitors, so across multiple methods - this should also improve the situation and make mocking of external domains easier than it is now.
 
 ## <a name="SS-CP.pac"></a> Promises and continuations
 
