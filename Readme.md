@@ -31,7 +31,7 @@ Introduction summary:
 ## <a name="SS-ruleList_Old"></a>O.list: List of Rules
 
 * [Rule 1. Avoid manual edits of package.json files](#T-rule1_Old)
-* [Rule 2. Always use declarations with `var`](#T-rule2_Old)
+* [Rule 2. Always use declarations with `var|let|const`](#T-rule2_Old)
 * [Rule 3. Always use semicolons](#T-rule3_Old)
 * [Rule 4. All variables and functions should be declared before used](#T-rule4_Old)
 * [Rule 5. Define variables where they're needed](#T-rule5_Old)
@@ -99,12 +99,11 @@ Mixing manual changes and "npm install way" of working creates unnecessary probl
 
 ## <a name="SS-languageRules_Old"></a>O.Language: Language Rules
 
-### <a name="T-rule2_Old"></a>Rule 2. Always use declarations with `var`
+### <a name="T-rule2_Old"></a>Rule 2. Always use declarations with `var|let|const`
 
 ![rationale][rationale] Rationale:
 
-When you fail to specify `var`, the variable gets placed in the global context, potentially clobbering existing values. Also, if there's no declaration, it's hard to tell in what scope a variable lives (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with `var`.
-
+When you fail to specify `var|let|const`, the variable gets placed in the global context, potentially clobbering existing values. Also, if there's no declaration, it's hard to tell in what scope a variable lives (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with `var|let|const`.
 ***
 
 ### <a name="T-rule3_Old"></a>Rule 3. Always use semicolons
