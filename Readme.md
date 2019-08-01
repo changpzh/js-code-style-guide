@@ -3,7 +3,7 @@
 Aug 1, 2019
 
 * [In: Introduction](#S-introduction)
-* [O: Old Style Guide](#S-oldGuide)
+* [O: Style Guide](#S-oldGuide)
 * [CP: Common code problems](#S-CommonCodeProblems)
 
 # <a name="S-introduction"></a>In: Introduction
@@ -17,7 +17,7 @@ Introduction summary:
 * [In.struct: The structure of this document](#SS-struct)
 * [In.sec: Major sections](#SS-sec)
 
-# <a name="S-oldGuide"></a>O: Old Style Guide
+# <a name="S-oldGuide"></a>O: Style Guide
 
 * [O.list: List of Rules](#SS-ruleList_Old)
 * [O.packageJson: "package.json" Rules](#SS-packageJson_Old)
